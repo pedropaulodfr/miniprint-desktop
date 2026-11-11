@@ -1,0 +1,178 @@
+<UserControl x:Class="MiniPrint.Desktop.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="Transparent">
+        <StackPanel Margin="{StaticResource PagePadding}" MaxWidth="1000" HorizontalAlignment="Left">
+
+            <TextBlock Text="Configurações" Style="{StaticResource PageTitle}" />
+            <TextBlock Style="{StaticResource PageSubtitle}"
+                       Text="Valores padrão da SC03h-5718: 384 pontos por linha e 4 linhas de alimentação final. Só altere os campos avançados se souber o efeito." />
+
+            <!-- Impressora -->
+            <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="Impressora" Style="{StaticResource SectionHeader}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="16" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Nome" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.DeviceName}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Endereço MAC" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.DeviceMac}" FontFamily="{StaticResource MonoFont}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Largura de impressão (pontos)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.PaperWidth}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Linhas de alimentação final" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.FeedLines}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Margem de segurança (pontos)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.SafetyFeedPoints}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Velocidade (0xBD)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.Speed}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Energia para imagens (0xAF)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.ImageEnergy}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Energia para texto (0xAF)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.TextEnergy}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Modo de desenho (0xBE)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.DrawingMode}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Style="{StaticResource Muted}" Margin="0,8,0,0"
+                               Text="Energia: 0 a 65535. Os valores usuais são 16384 (0x4000) para imagens e 24576 (0x6000) para texto. Menos energia clareia a impressão; mais energia escurece e pode borrar." />
+
+                    <TextBlock Style="{StaticResource Muted}" Margin="0,8,0,0"
+                               Text="Margem de segurança: pontos avançados depois da última linha para o texto passar do lacre antes do corte. 128 pontos ≈ 16 mm. Se o papel ainda for cortado no texto, aumente para 200 ou 250." />
+                </StackPanel>
+            </Border>
+
+            <!-- Comunicação -->
+            <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="Comunicação BLE" Style="{StaticResource SectionHeader}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Bloco por escrita (bytes)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.ChunkSize}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Intervalo entre pacotes (ms)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.InterChunkDelayMs}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Timeout de comunicação (ms)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding Printer.CommandTimeoutMs}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Style="{StaticResource Muted}" Margin="0,8,0,0"
+                               Text="O MTU negociado com a SC03h é 512 bytes; o bloco de 200 bytes é o valor usado pelas implementações de referência e evita perda de dados sem confirmação." />
+
+                    <CheckBox Content="Usar escrita com confirmação (write with response)"
+                              IsChecked="{Binding Printer.WriteWithResponse}" Margin="0,10,0,0" />
+                    <CheckBox Content="Reconectar automaticamente após queda inesperada"
+                              IsChecked="{Binding Printer.AutoReconnect}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Avançado -->
+            <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="Protocolo (avançado)" Style="{StaticResource SectionHeader}" />
+
+                    <CheckBox Content="Enviar sequência de início (0xA6 'lattice start')"
+                              IsChecked="{Binding Printer.SendStartLattice}" />
+                    <CheckBox Content="Enviar sequência de fim (0xA6 'lattice end')"
+                              IsChecked="{Binding Printer.SendEndLattice}" />
+
+                    <TextBlock Style="{StaticResource Muted}" Margin="0,10,0,0"
+                               Text="O byte do comando 0xBE é ambíguo entre as implementações de referência: o Cat-Printer envia 1 sempre, o bitbank2 envia 0 para imagens. Se a impressão sair com falhas de aquecimento, teste o outro valor." />
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Button Content="Salvar configurações" Style="{StaticResource PrimaryButton}"
+                        Command="{Binding SaveCommand}" />
+                <Button Content="Restaurar padrões" Style="{StaticResource SecondaryButton}"
+                        Command="{Binding RestoreDefaultsCommand}" Margin="10,0,0,0" />
+                <Button Content="Abrir pasta de dados" Style="{StaticResource GhostButton}"
+                        Command="{Binding OpenDataFolderCommand}" Margin="10,0,0,0" />
+            </StackPanel>
+
+            <TextBlock Text="{Binding StatusMessage}" Style="{StaticResource Muted}" />
+            <TextBlock Text="{Binding DataFolder, StringFormat=Dados salvos em: {0}}"
+                       Style="{StaticResource Mono}" Margin="0,6,0,20" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

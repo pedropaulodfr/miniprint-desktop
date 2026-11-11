@@ -1,0 +1,441 @@
+<UserControl x:Class="MiniPrint.Desktop.Views.TemplateEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+
+    <Grid Margin="{StaticResource PagePadding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,12">
+            <TextBlock Text="{Binding Title}" Style="{StaticResource PageTitle}" />
+            <TextBlock Style="{StaticResource PageSubtitle}"
+                       Text="Monte o documento com textos, divisores e espaços. Os campos dinâmicos viram «etiquetas» e são preenchidos na hora de imprimir." />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="330" />
+                <ColumnDefinition Width="14" />
+                <ColumnDefinition Width="*" MinWidth="300" />
+                <ColumnDefinition Width="14" />
+                <ColumnDefinition Width="330" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Blocos e campos -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="12" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Style="{StaticResource Card}" Padding="12">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" Text="Blocos do documento"
+                                   Style="{StaticResource SectionHeader}" />
+
+                        <StackPanel DockPanel.Dock="Bottom" Margin="0,8,0,0">
+                            <WrapPanel>
+                                <Button Content="+ Texto" Style="{StaticResource GhostButton}"
+                                        Command="{Binding AddTextBlockCommand}" />
+                                <Button Content="+ Divisor" Style="{StaticResource GhostButton}"
+                                        Command="{Binding AddDividerCommand}" />
+                                <Button Content="+ Espaço" Style="{StaticResource GhostButton}"
+                                        Command="{Binding AddSpacerCommand}" />
+                            </WrapPanel>
+                            <WrapPanel Margin="0,4,0,0">
+                                <Button Content="↑" Style="{StaticResource GhostButton}"
+                                        Command="{Binding MoveBlockUpCommand}" />
+                                <Button Content="↓" Style="{StaticResource GhostButton}"
+                                        Command="{Binding MoveBlockDownCommand}" />
+                                <Button Content="Duplicar" Style="{StaticResource GhostButton}"
+                                        Command="{Binding DuplicateBlockCommand}" />
+                                <Button Content="Remover" Style="{StaticResource DangerButton}"
+                                        Padding="10,6" Margin="4,0,0,0"
+                                        Command="{Binding RemoveBlockCommand}" />
+                            </WrapPanel>
+                        </StackPanel>
+
+                        <ListBox ItemsSource="{Binding Blocks}"
+                                 SelectedItem="{Binding SelectedBlock}"
+                                 Background="{StaticResource SurfaceAltBrush}"
+                                 BorderThickness="0"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="2,3">
+                                        <TextBlock Text="{Binding KindText}" FontSize="10"
+                                                   Foreground="{StaticResource TextSecondaryBrush}" />
+                                        <TextBlock Text="{Binding PreviewText}" TextWrapping="NoWrap"
+                                                   TextTrimming="CharacterEllipsis" FontSize="12" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+                </Border>
+
+                <Border Grid.Row="2" Style="{StaticResource Card}" Padding="12">
+                    <StackPanel>
+                        <TextBlock Text="Campos dinâmicos" Style="{StaticResource SectionHeader}" />
+
+                        <ListBox Height="132"
+                                 ItemsSource="{Binding Fields}"
+                                 SelectedItem="{Binding SelectedField}"
+                                 Background="{StaticResource SurfaceAltBrush}"
+                                 BorderThickness="0"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="2,3">
+                                        <TextBlock Text="{Binding Label}" FontSize="12" FontWeight="SemiBold" />
+                                        <TextBlock Style="{StaticResource Mono}">
+                                            <Run Text="{Binding Key, Mode=OneWay}" />
+                                            <Run Text="  ·  " />
+                                            <Run Text="{Binding TypeText, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <WrapPanel Margin="0,6,0,8">
+                            <Button Content="↑" Style="{StaticResource GhostButton}"
+                                    Command="{Binding MoveFieldUpCommand}" />
+                            <Button Content="↓" Style="{StaticResource GhostButton}"
+                                    Command="{Binding MoveFieldDownCommand}" />
+                            <Button Content="Remover campo" Style="{StaticResource DangerButton}"
+                                    Padding="10,6" Margin="4,0,0,0"
+                                    Command="{Binding RemoveFieldCommand}" />
+                        </WrapPanel>
+
+                        <TextBlock Text="Novo campo" Style="{StaticResource Label}" />
+                        <TextBox Text="{Binding NewFieldLabel, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="Rótulo exibido no formulário" />
+                        <ComboBox ItemsSource="{Binding FieldTypes}"
+                                  SelectedItem="{Binding NewFieldType}"
+                                  Margin="0,6,0,0" />
+                        <TextBox Text="{Binding NewFieldOptions, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,6,0,0"
+                                 ToolTip="Para lista de opções: separe por vírgula" />
+                        <Button Content="Adicionar campo" Style="{StaticResource SecondaryButton}"
+                                Command="{Binding AddFieldCommand}" Margin="0,8,0,0" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Propriedades -->
+            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="Bloco selecionado" Style="{StaticResource SectionHeader}" />
+
+                            <StackPanel IsEnabled="{Binding HasSelectedBlock}">
+                                <StackPanel Visibility="{Binding IsTextBlock, Converter={StaticResource BoolToVisibility}}">
+                                    <TextBlock Text="Texto" Style="{StaticResource Label}" />
+                                    <TextBox x:Name="BlockText"
+                                             Text="{Binding SelectedBlockText, UpdateSourceTrigger=PropertyChanged}"
+                                             AcceptsReturn="True"
+                                             MinHeight="64"
+                                             MaxHeight="120"
+                                             TextWrapping="Wrap"
+                                             VerticalScrollBarVisibility="Auto"
+                                             FontFamily="{StaticResource MonoFont}" />
+
+                                    <Grid Margin="0,8,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ComboBox Grid.Column="0"
+                                                  x:Name="FieldPicker"
+                                                  ItemsSource="{Binding FieldChoices}"
+                                                  DisplayMemberPath="Label"
+                                                  ToolTip="Escolha um campo para inserir no texto" />
+
+                                        <Button Grid.Column="1" Content="Inserir campo"
+                                                Style="{StaticResource SecondaryButton}"
+                                                Margin="8,0,0,0"
+                                                Click="OnInsertField" />
+                                    </Grid>
+
+                                    <TextBlock Style="{StaticResource Muted}" Margin="0,6,0,0"
+                                               Text="O campo é inserido na posição do cursor. Você também pode digitar o texto normalmente." />
+                                </StackPanel>
+
+                                <StackPanel Visibility="{Binding IsDividerBlock, Converter={StaticResource BoolToVisibility}}"
+                                            Margin="0,4,0,0">
+                                    <TextBlock Text="Estilo do divisor" Style="{StaticResource Label}" />
+                                    <ComboBox ItemsSource="{Binding DividerStyles}"
+                                              SelectedItem="{Binding SelectedBlock.DividerStyle}" />
+                                </StackPanel>
+
+                                <StackPanel Visibility="{Binding IsSpacerBlock, Converter={StaticResource BoolToVisibility}}"
+                                            Margin="0,4,0,0">
+                                    <TextBlock Text="Altura do espaço (pontos)" Style="{StaticResource Label}" />
+                                    <TextBox Text="{Binding SelectedBlock.Height, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Fonte (pt)" Style="{StaticResource Label}" />
+                                        <TextBox Text="{Binding SelectedBlock.FontSize, UpdateSourceTrigger=PropertyChanged}"
+                                                 ToolTip="0 usa o tamanho padrão do documento" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Espaço antes" Style="{StaticResource Label}" />
+                                        <TextBox Text="{Binding SelectedBlock.SpacingBefore, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="Espaço depois" Style="{StaticResource Label}" />
+                                        <TextBox Text="{Binding SelectedBlock.SpacingAfter, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Margin="0,8,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Alinhamento do bloco" Style="{StaticResource Label}" />
+                                        <ComboBox ItemsSource="{Binding Alignments}"
+                                                  SelectedItem="{Binding SelectedBlock.Alignment}" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" VerticalAlignment="Bottom">
+                                        <CheckBox Content="Negrito" IsChecked="{Binding SelectedBlock.Bold}" />
+                                        <CheckBox Content="Itálico" IsChecked="{Binding SelectedBlock.Italic}" />
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+
+                            <TextBlock Text="Selecione um bloco na lista à esquerda."
+                                       Style="{StaticResource Muted}"
+                                       Visibility="{Binding HasSelectedBlock, Converter={StaticResource InverseBoolToVisibility}}" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="Campo selecionado" Style="{StaticResource SectionHeader}" />
+
+                            <StackPanel IsEnabled="{Binding HasSelectedField}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Rótulo" Style="{StaticResource Label}" />
+                                        <TextBox Text="{Binding SelectedField.Label, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Nome interno" Style="{StaticResource Label}" />
+                                        <TextBox Text="{Binding SelectedField.Key, UpdateSourceTrigger=PropertyChanged}"
+                                                 FontFamily="{StaticResource MonoFont}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Margin="0,8,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Tipo" Style="{StaticResource Label}" />
+                                        <ComboBox ItemsSource="{Binding FieldTypes}"
+                                                  SelectedItem="{Binding SelectedField.Type}" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Texto de orientação" Style="{StaticResource Label}" />
+                                        <TextBox Text="{Binding SelectedField.Placeholder, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <TextBlock Text="Opções da lista (separadas por vírgula)" Style="{StaticResource Label}"
+                                           Margin="0,8,0,4"
+                                           Visibility="{Binding SelectedField.IsList, Converter={StaticResource BoolToVisibility}}" />
+                                <TextBox Text="{Binding SelectedField.OptionsText}"
+                                         Visibility="{Binding SelectedField.IsList, Converter={StaticResource BoolToVisibility}}" />
+
+                                <Grid Margin="0,8,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox Grid.Column="0" Content="Obrigatório"
+                                              IsChecked="{Binding SelectedField.Required}" VerticalAlignment="Center" />
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Valor padrão (opcional)" Style="{StaticResource Label}" />
+                                        <TextBox Text="{Binding SelectedField.DefaultValue, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+
+                            <TextBlock Text="Selecione um campo na lista à esquerda."
+                                       Style="{StaticResource Muted}"
+                                       Visibility="{Binding HasSelectedField, Converter={StaticResource InverseBoolToVisibility}}" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="Documento" Style="{StaticResource SectionHeader}" />
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Nome do modelo" Style="{StaticResource Label}" />
+                                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Largura (pontos)" Style="{StaticResource Label}" />
+                                    <TextBox Text="{Binding PaperWidth, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <TextBlock Text="Descrição" Style="{StaticResource Label}" Margin="0,8,0,4" />
+                            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Fonte (pt)" Style="{StaticResource Label}" />
+                                    <TextBox Text="{Binding FontSize, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Entrelinhas" Style="{StaticResource Label}" />
+                                    <TextBox Text="{Binding LineSpacing, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="Alinhamento" Style="{StaticResource Label}" />
+                                    <ComboBox ItemsSource="{Binding Alignments}" SelectedItem="{Binding Alignment}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Margem esq." Style="{StaticResource Label}" />
+                                    <TextBox Text="{Binding MarginLeft, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Margem dir." Style="{StaticResource Label}" />
+                                    <TextBox Text="{Binding MarginRight, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="Margem sup." Style="{StaticResource Label}" />
+                                    <TextBox Text="{Binding MarginTop, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="6">
+                                    <TextBlock Text="Margem inf." Style="{StaticResource Label}" />
+                                    <TextBox Text="{Binding MarginBottom, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <CheckBox Content="Texto em negrito no documento inteiro" IsChecked="{Binding Bold}"
+                                      Margin="0,10,0,0" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Pré-visualização -->
+            <Border Grid.Column="4" Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Margin="0,0,0,8">
+                        <TextBlock Text="Pré-visualização" Style="{StaticResource SectionHeader}" Margin="0" />
+                        <TextBlock Text="{Binding PreviewInfo}" Style="{StaticResource Muted}" Margin="0,2,0,0" />
+                    </StackPanel>
+
+                    <Border Grid.Row="1" Style="{StaticResource PreviewWell}">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <Border Style="{StaticResource Paper}">
+                                <Image Source="{Binding PreviewImage}"
+                                       Stretch="None"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                            </Border>
+                        </ScrollViewer>
+                    </Border>
+
+                    <TextBlock Grid.Row="2" Text="{Binding ValidationText}" Style="{StaticResource Muted}"
+                               Margin="0,10,0,0" TextWrapping="Wrap" />
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,12,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Content="Voltar sem salvar" Style="{StaticResource GhostButton}"
+                        Command="{Binding CancelCommand}" />
+                <Button Content="Converter para editor visual" Style="{StaticResource GhostButton}"
+                        Command="{Binding ConvertToVisualCommand}" Margin="6,0,0,0"
+                        ToolTip="Abre este modelo com posicionamento livre" />
+            </StackPanel>
+
+            <Button Content="Salvar modelo" Style="{StaticResource PrimaryButton}"
+                    Command="{Binding SaveCommand}" HorizontalAlignment="Right" MinWidth="150" />
+        </Grid>
+    </Grid>
+</UserControl>

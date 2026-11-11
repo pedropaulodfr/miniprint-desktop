@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>MiniPrint.Protocol</RootNamespace>
+    <AssemblyName>MiniPrint.Protocol</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MiniPrint.Core\MiniPrint.Core.csproj" />
+  </ItemGroup>
+
+</Project>

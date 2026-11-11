@@ -1,0 +1,151 @@
+<UserControl x:Class="MiniPrint.Desktop.Views.DiagnosticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+
+    <Grid Margin="{StaticResource PagePadding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Diagnóstico" Style="{StaticResource PageTitle}" />
+            <TextBlock Style="{StaticResource PageSubtitle}"
+                       Text="Registro de tudo o que acontece na comunicação: dispositivos, serviços, pacotes, respostas e erros. Exporte em TXT para enviar junto de um relato de problema." />
+        </StackPanel>
+
+        <!-- Ferramentas -->
+        <Grid Grid.Row="1" Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Ler estado (0xA3)" Style="{StaticResource SecondaryButton}"
+                        Command="{Binding ProbeStateCommand}" />
+                <Button Content="Ler versão (0xA8)" Style="{StaticResource SecondaryButton}"
+                        Command="{Binding ProbeInfoCommand}" Margin="8,0,0,0" />
+                <Button Content="Exportar TXT" Style="{StaticResource PrimaryButton}"
+                        Command="{Binding ExportCommand}" Margin="8,0,0,0" />
+                <Button Content="Abrir pasta" Style="{StaticResource GhostButton}"
+                        Command="{Binding OpenLogFolderCommand}" Margin="8,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <CheckBox Content="Mostrar tráfego" IsChecked="{Binding ShowTraffic}" Margin="0,0,14,0" />
+                <CheckBox Content="Rolagem automática" IsChecked="{Binding AutoScroll}" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Cartões de estado -->
+        <Grid Grid.Row="2" Margin="0,0,0,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="14" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="14" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource Card}" Padding="14">
+                <StackPanel>
+                    <TextBlock Text="Conexão" Style="{StaticResource Label}" />
+                    <TextBlock Text="{Binding ConnectionSummary}" Style="{StaticResource Value}" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Style="{StaticResource Card}" Padding="14">
+                <StackPanel>
+                    <TextBlock Text="Resposta de estado (0xA3)" Style="{StaticResource Label}" />
+                    <TextBlock Text="{Binding DeviceState}" Style="{StaticResource Mono}"
+                               TextWrapping="Wrap" MaxHeight="90" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="4" Style="{StaticResource Card}" Padding="14">
+                <StackPanel>
+                    <TextBlock Text="Versão do firmware (0xA8)" Style="{StaticResource Label}" />
+                    <TextBlock Text="{Binding DeviceInfoText}" Style="{StaticResource Mono}"
+                               TextWrapping="Wrap" MaxHeight="90" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Log -->
+        <Border Grid.Row="3" Style="{StaticResource Card}" Padding="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="12,10,12,8">
+                    <TextBox x:Name="FilterBox"
+                             Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                             Width="280"
+                             HorizontalAlignment="Left"
+                             ToolTip="Filtrar por texto" Tag="Filtrar registro por texto" />
+                    <Button Content="Limpar visão" Style="{StaticResource GhostButton}"
+                            Command="{Binding ClearCommand}" HorizontalAlignment="Right" />
+                </Grid>
+
+                <Border Grid.Row="1" BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,1,0,0">
+                    <ListBox x:Name="LogList"
+                             ItemsSource="{Binding Entries}"
+                             Background="{StaticResource SurfaceBrush}"
+                             FontFamily="{StaticResource MonoFont}"
+                             FontSize="11.5"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Padding" Value="8,3" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="86" />
+                                        <ColumnDefinition Width="52" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{Binding TimestampText}"
+                                               Foreground="{StaticResource TextSecondaryBrush}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding LevelText}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding LevelText}" Value="ERRO">
+                                                        <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+                                                        <Setter Property="FontWeight" Value="SemiBold" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding LevelText}" Value="AVISO">
+                                                        <Setter Property="Foreground" Value="{StaticResource WarningBrush}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding LevelText}" Value="TRÁF">
+                                                        <Setter Property="Foreground" Value="{StaticResource InfoBrush}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="2" Text="{Binding Category}"
+                                               Foreground="{StaticResource TextSecondaryBrush}" />
+                                    <TextBlock Grid.Column="3" Text="{Binding Message}" TextWrapping="Wrap" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+
+                <TextBlock Grid.Row="2" Text="{Binding StatusMessage}" Style="{StaticResource Muted}"
+                           Margin="12,8,12,10" />
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

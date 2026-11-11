@@ -1,0 +1,308 @@
+<UserControl x:Class="MiniPrint.Desktop.Views.PrinterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+
+    <Grid Margin="{StaticResource PagePadding}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*" MinWidth="380" />
+            <ColumnDefinition Width="18" />
+            <ColumnDefinition Width="1*" MinWidth="320" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Descoberta -->
+        <Border Grid.Column="0" Style="{StaticResource Card}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Impressora" Style="{StaticResource PageTitle}" />
+                    <TextBlock Style="{StaticResource PageSubtitle}"
+                               Text="Pesquise os dispositivos Bluetooth Low Energy próximos, selecione a SC03h-5718 e conecte." />
+                </StackPanel>
+
+                <Grid Grid.Row="1" Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            Content="{Binding ScanButtonText}"
+                            Style="{StaticResource PrimaryButton}"
+                            Command="{Binding ScanCommand}" />
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="14,0,0,0">
+                        <TextBlock Text="Duração" Style="{StaticResource Muted}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <ComboBox SelectedItem="{Binding ScanSeconds}"
+                                  ItemsSource="{Binding ScanDurations}"
+                                  Width="80" />
+                    </StackPanel>
+
+                    <Button Grid.Column="2"
+                            Content="Limpar lista"
+                            Style="{StaticResource GhostButton}"
+                            Command="{Binding ClearListCommand}"
+                            HorizontalAlignment="Right" />
+                </Grid>
+
+                <!-- Resultado da busca: fica aqui, e não no estado da conexão. -->
+                <StackPanel Grid.Row="2" Margin="0,0,0,10">
+                    <TextBlock Text="{Binding DiscoveryText}" FontSize="12.5" FontWeight="SemiBold"
+                               TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding DiscoveryDetail}" Style="{StaticResource Muted}"
+                               TextWrapping="Wrap" Margin="0,2,0,0" />
+                </StackPanel>
+
+                <Border Grid.Row="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                        CornerRadius="10" Padding="10" MinHeight="200">
+                    <Grid>
+                        <ListBox ItemsSource="{Binding Devices}"
+                                 SelectedItem="{Binding SelectedDevice}"
+                                 Style="{StaticResource DeviceListBox}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold"
+                                                       TextTrimming="CharacterEllipsis" />
+                                            <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                                <TextBlock Text="{Binding AddressText}" Style="{StaticResource Mono}" />
+                                                <TextBlock Text="{Binding ModelHint, StringFormat=  ·  perfil {0}}"
+                                                           Style="{StaticResource Mono}"
+                                                           Foreground="{StaticResource AccentBrush}" />
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding RssiText}"
+                                                   Style="{StaticResource Mono}"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Visibility="{Binding Devices.Count, Converter={StaticResource ZeroToVisibility}}">
+                            <TextBlock Text="&#xE702;" Style="{StaticResource Icon}" FontSize="26"
+                                       Foreground="{StaticResource TextTertiaryBrush}" HorizontalAlignment="Center" />
+                            <TextBlock Text="Nenhum dispositivo na lista" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,10,0,0" />
+                            <TextBlock Text="Clique em Pesquisar impressoras para procurar dispositivos BLE próximos."
+                                       Style="{StaticResource Muted}" TextAlignment="Center" Margin="0,4,0,0" MaxWidth="260" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <StackPanel Grid.Row="4" Margin="0,14,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Endereço MAC (conexão manual)" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding ManualMac, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="{StaticResource MonoFont}" />
+                        </StackPanel>
+
+                        <Button Grid.Column="1"
+                                Content="Usar impressora salva"
+                                Style="{StaticResource GhostButton}"
+                                Command="{Binding UseSavedPrinterCommand}"
+                                VerticalAlignment="Bottom"
+                                Margin="10,0,0,0" />
+                    </Grid>
+
+                    <CheckBox Content="Modo simulado (não imprime papel)" IsChecked="{Binding UseSimulator}"
+                              Margin="0,12,0,0" />
+                    <TextBlock Text="{Binding SimulationNotice}" Style="{StaticResource Muted}" Margin="24,0,0,0" />
+
+                    <Button Content="{Binding ConnectButtonText}"
+                            Style="{StaticResource PrimaryButton}"
+                            Command="{Binding ConnectCommand}"
+                            Margin="0,12,0,0"
+                            HorizontalAlignment="Stretch" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Estado -->
+        <Border Grid.Column="2" Style="{StaticResource Card}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="-20,-20,-14,-20" Padding="20,20,14,20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Estado da conexão" Style="{StaticResource SectionHeader}" />
+
+                    <Border Style="{StaticResource InsetPanel}">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="10" Height="10" Fill="{Binding StatusBrush}"
+                                         VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding StatusText}" FontWeight="SemiBold" Margin="8,0,0,0"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                            <TextBlock Text="{Binding StatusDetail}" Style="{StaticResource Muted}" Margin="18,6,0,0" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <Grid Grid.Row="1" Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Dispositivo" Style="{StaticResource Label}" />
+                        <TextBlock Text="{Binding ConnectedDeviceText}" Style="{StaticResource Value}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="MTU" Style="{StaticResource Label}" />
+                        <TextBlock Text="{Binding MtuText}" Style="{StaticResource Value}" />
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Grid.Row="2" Margin="0,14,0,0">
+                    <TextBlock Text="Bluetooth do computador" Style="{StaticResource Label}" />
+                    <TextBlock Text="{Binding BluetoothMessage}" Style="{StaticResource Muted}" />
+                </StackPanel>
+
+                <Border Grid.Row="3" Style="{StaticResource InsetPanel}" Margin="0,14,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Avançar papel sem imprimir" Style="{StaticResource Label}" />
+                            <TextBox Text="{Binding FeedAmount, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="{Binding FeedAmountHint}" Style="{StaticResource Muted}" Margin="0,4,0,0" />
+                        </StackPanel>
+
+                        <Button Grid.Column="1"
+                                Content="Avançar"
+                                Style="{StaticResource SecondaryButton}"
+                                Command="{Binding FeedPaperCommand}"
+                                VerticalAlignment="Bottom" />
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="4" Style="{StaticResource InsetPanel}" Margin="0,14,0,0">
+                    <StackPanel>
+                        <Grid>
+                            <TextBlock Text="Estado do equipamento" Style="{StaticResource Label}" />
+                            <Button Content="Atualizar" Style="{StaticResource GhostButton}"
+                                    HorizontalAlignment="Right" Padding="8,2"
+                                    Command="{Binding RefreshStatusCommand}" />
+                        </Grid>
+
+                        <TextBlock Text="{Binding DeviceStatusText}" FontSize="13" FontWeight="SemiBold"
+                                   Margin="0,4,0,6" />
+
+                        <WrapPanel>
+                            <Border Style="{StaticResource Badge}" Background="{StaticResource SurfaceBrush}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Bateria: " Style="{StaticResource Muted}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding BatteryText}" FontSize="12" FontWeight="SemiBold"
+                                               VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding LowBattery}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource BadgeWarning}"
+                                    Visibility="{Binding PaperOut, Converter={StaticResource BoolToVisibility}}">
+                                <TextBlock Text="Sem papel" FontSize="11.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource WarningBrush}" />
+                            </Border>
+
+                            <Border Style="{StaticResource BadgeWarning}"
+                                    Visibility="{Binding CoverOpen, Converter={StaticResource BoolToVisibility}}">
+                                <TextBlock Text="Tampa aberta" FontSize="11.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource WarningBrush}" />
+                            </Border>
+
+                            <Border Style="{StaticResource BadgeWarning}"
+                                    Visibility="{Binding HeadHot, Converter={StaticResource BoolToVisibility}}">
+                                <TextBlock Text="Cabeçote quente" FontSize="11.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource WarningBrush}" />
+                            </Border>
+
+                            <Border Style="{StaticResource BadgeAccent}"
+                                    Visibility="{Binding Busy, Converter={StaticResource BoolToVisibility}}">
+                                <TextBlock Text="Ocupada" FontSize="11.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AccentBrush}" />
+                            </Border>
+                        </WrapPanel>
+
+                        <TextBlock Text="{Binding DeviceStatusRaw}" Style="{StaticResource Mono}" Margin="0,2,0,0" />
+                        <TextBlock Style="{StaticResource Muted}" Margin="0,4,0,0"
+                                   Text="O protocolo informa apenas o aviso de bateria fraca; não há percentual documentado. Os dois últimos bytes são exibidos crus." />
+                    </StackPanel>
+                </Border>
+
+                <Grid Grid.Row="5" Margin="0,14,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,8">
+                        <TextBlock Text="Serviços e características GATT" Style="{StaticResource SectionHeader}" Margin="0" />
+                        <Button Content="Inspecionar"
+                                Style="{StaticResource GhostButton}"
+                                Command="{Binding InspectCommand}"
+                                HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <TextBox Grid.Row="1" Height="150"
+                             Text="{Binding GattSummary, Mode=OneWay}"
+                             IsReadOnly="True"
+                             AcceptsReturn="True"
+                             FontFamily="{StaticResource MonoFont}"
+                             FontSize="11.5"
+                             TextWrapping="NoWrap"
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"
+                             Background="{StaticResource SurfaceAltBrush}"
+                             BorderThickness="0" />
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

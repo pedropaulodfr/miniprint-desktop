@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>MiniPrint.Desktop</RootNamespace>
+    <AssemblyName>MiniPrint</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\..\assets\app.ico</ApplicationIcon>
+    <SatelliteResourceLanguages>pt-BR</SatelliteResourceLanguages>
+    <StartupObject>MiniPrint.Desktop.App</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\assets\app.ico" Link="assets\app.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MiniPrint.Core\MiniPrint.Core.csproj" />
+    <ProjectReference Include="..\MiniPrint.Protocol\MiniPrint.Protocol.csproj" />
+    <ProjectReference Include="..\MiniPrint.Imaging\MiniPrint.Imaging.csproj" />
+    <ProjectReference Include="..\MiniPrint.Bluetooth\MiniPrint.Bluetooth.csproj" />
+  </ItemGroup>
+
+</Project>

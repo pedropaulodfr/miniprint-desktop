@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <RootNamespace>MiniPrint.Bluetooth</RootNamespace>
+    <AssemblyName>MiniPrint.Bluetooth</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MiniPrint.Core\MiniPrint.Core.csproj" />
+    <ProjectReference Include="..\MiniPrint.Protocol\MiniPrint.Protocol.csproj" />
+  </ItemGroup>
+
+</Project>

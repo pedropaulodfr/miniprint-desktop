@@ -1,0 +1,203 @@
+{
+  "Format": "miniprint.template",
+  "Version": 1,
+  "Template": {
+    "SchemaVersion": 1,
+    "Id": "5ccff432-f80f-41f4-b04c-bb08df6f3958",
+    "Name": "Recibo de Servi\u00E7o",
+    "Description": "Recibo r\u00E1pido com dados do cliente, servi\u00E7o e valor.",
+    "CreatedAt": "2026-11-05T17:01:55.8249368-03:00",
+    "UpdatedAt": "2026-11-05T17:01:55.8326994-03:00",
+    "PaperWidth": 384,
+    "FontSize": 11,
+    "Bold": false,
+    "Alignment": "Esquerda",
+    "LineSpacing": 1.25,
+    "MarginLeft": 10,
+    "MarginRight": 10,
+    "MarginTop": 8,
+    "MarginBottom": 10,
+    "Blocks": [
+      {
+        "Kind": "Texto",
+        "Text": "RECIBO",
+        "FontSize": 14,
+        "Bold": true,
+        "Italic": false,
+        "Alignment": "Centro",
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Divisor",
+        "Text": "",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Recebi de: {{cliente}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 6,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "CPF: {{cpf}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Telefone: {{telefone}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Referente a: {{servico}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Valor: R$ {{valor}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Data: {{data}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Divisor",
+        "Text": "",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 8,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "____________________________",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "Alignment": "Centro",
+        "SpacingBefore": 14,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Assinatura",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "Alignment": "Centro",
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      }
+    ],
+    "Fields": [
+      {
+        "Key": "cliente",
+        "Label": "Cliente",
+        "Type": "TextoCurto",
+        "Placeholder": "",
+        "Required": true,
+        "DefaultValue": "",
+        "Options": []
+      },
+      {
+        "Key": "cpf",
+        "Label": "CPF",
+        "Type": "Cpf",
+        "Placeholder": "000.000.000-00",
+        "Required": false,
+        "DefaultValue": "",
+        "Options": []
+      },
+      {
+        "Key": "telefone",
+        "Label": "Telefone",
+        "Type": "Telefone",
+        "Placeholder": "(00) 00000-0000",
+        "Required": false,
+        "DefaultValue": "",
+        "Options": []
+      },
+      {
+        "Key": "servico",
+        "Label": "Servi\u00E7o prestado",
+        "Type": "TextoLongo",
+        "Placeholder": "",
+        "Required": true,
+        "DefaultValue": "",
+        "Options": []
+      },
+      {
+        "Key": "valor",
+        "Label": "Valor",
+        "Type": "Monetario",
+        "Placeholder": "",
+        "Required": true,
+        "DefaultValue": "",
+        "Options": []
+      },
+      {
+        "Key": "data",
+        "Label": "Data",
+        "Type": "Data",
+        "Placeholder": "",
+        "Required": true,
+        "DefaultValue": "",
+        "Options": []
+      }
+    ]
+  }
+}

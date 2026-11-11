@@ -1,0 +1,34 @@
+# Build
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+
+# Distribuição
+publish/
+dist/
+installer/output/
+
+# Ferramentas locais
+tools/InnoSetup/
+tools/*.exe
+
+# Referências de pesquisa (não redistribuir)
+_research/
+
+# Testes E2E: backup dos dados reais do usuário e saídas de execução
+_e2e/data-backup/
+_e2e/resultado-*.csv
+_e2e/editor-controls.txt
+
+# Rascunhos de captura de tela na raiz
+/_check*.png
+/_modelo*.png
+/_visual*.png
+
+# IDE
+.vs/
+.idea/
+*.swp

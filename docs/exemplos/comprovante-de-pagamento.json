@@ -1,0 +1,243 @@
+{
+  "Format": "miniprint.template",
+  "Version": 1,
+  "Template": {
+    "SchemaVersion": 1,
+    "Id": "9be37d9f-086d-41f0-bf70-ad7b5ff5e800",
+    "Name": "Comprovante de Pagamento",
+    "Description": "Modelo simples para registrar pagamentos recebidos.",
+    "CreatedAt": "2026-11-05T17:01:54.8541497-03:00",
+    "UpdatedAt": "2026-11-05T17:01:54.8617247-03:00",
+    "PaperWidth": 384,
+    "FontSize": 11,
+    "Bold": false,
+    "Alignment": "Esquerda",
+    "LineSpacing": 1.25,
+    "MarginLeft": 10,
+    "MarginRight": 10,
+    "MarginTop": 8,
+    "MarginBottom": 10,
+    "Blocks": [
+      {
+        "Kind": "Texto",
+        "Text": "COMPROVANTE DE PAGAMENTO",
+        "FontSize": 13,
+        "Bold": true,
+        "Italic": false,
+        "Alignment": "Centro",
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Divisor",
+        "Text": "",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Igual",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Recebemos de: {{nome_pagador}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 6,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "CPF/CNPJ: {{documento}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "A import\u00E2ncia de: R$ {{valor}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Referente a: {{descricao}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Forma de pagamento: {{forma_pagamento}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Data: {{data_pagamento}}",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Divisor",
+        "Text": "",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 6,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "PAGAMENTO RECEBIDO",
+        "FontSize": 0,
+        "Bold": true,
+        "Italic": false,
+        "Alignment": "Centro",
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Divisor",
+        "Text": "",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 0,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Assinatura: ____________________",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 10,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Texto",
+        "Text": "Obrigado pela prefer\u00EAncia!",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "Alignment": "Centro",
+        "SpacingBefore": 8,
+        "SpacingAfter": 0,
+        "DividerStyle": "Traco",
+        "Height": 12
+      },
+      {
+        "Kind": "Divisor",
+        "Text": "",
+        "FontSize": 0,
+        "Bold": false,
+        "Italic": false,
+        "SpacingBefore": 6,
+        "SpacingAfter": 0,
+        "DividerStyle": "Igual",
+        "Height": 12
+      }
+    ],
+    "Fields": [
+      {
+        "Key": "nome_pagador",
+        "Label": "Nome do pagador",
+        "Type": "TextoCurto",
+        "Placeholder": "Nome completo",
+        "Required": true,
+        "DefaultValue": "",
+        "Options": []
+      },
+      {
+        "Key": "documento",
+        "Label": "CPF/CNPJ",
+        "Type": "TextoCurto",
+        "Placeholder": "000.000.000-00 ou 00.000.000/0000-00",
+        "Required": true,
+        "DefaultValue": "",
+        "Options": []
+      },
+      {
+        "Key": "valor",
+        "Label": "Valor",
+        "Type": "Monetario",
+        "Placeholder": "150,00",
+        "Required": true,
+        "DefaultValue": "",
+        "Options": []
+      },
+      {
+        "Key": "descricao",
+        "Label": "Referente a",
+        "Type": "TextoLongo",
+        "Placeholder": "Descri\u00E7\u00E3o do pagamento",
+        "Required": false,
+        "DefaultValue": "",
+        "Options": []
+      },
+      {
+        "Key": "forma_pagamento",
+        "Label": "Forma de pagamento",
+        "Type": "Lista",
+        "Placeholder": "",
+        "Required": true,
+        "DefaultValue": "",
+        "Options": [
+          "Dinheiro",
+          "PIX",
+          "Cart\u00E3o de d\u00E9bito",
+          "Cart\u00E3o de cr\u00E9dito",
+          "Transfer\u00EAncia",
+          "Cheque"
+        ]
+      },
+      {
+        "Key": "data_pagamento",
+        "Label": "Data do pagamento",
+        "Type": "Data",
+        "Placeholder": "",
+        "Required": true,
+        "DefaultValue": "",
+        "Options": []
+      }
+    ]
+  }
+}

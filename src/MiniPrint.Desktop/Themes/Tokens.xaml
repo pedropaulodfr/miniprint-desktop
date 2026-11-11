@@ -1,0 +1,142 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!--
+        DESIGN SYSTEM · MiniPrint Desktop
+        Camada 1: tokens. Nenhuma outra camada deve conter cores, raios ou
+        espaçamentos "soltos": tudo vem daqui.
+
+        Direção visual: utilitário profissional, neutro e calmo.
+        - Superfícies claras e frias; barra lateral em grafite.
+        - Um único acento (verde-azulado) para a ação principal e o item ativo.
+        - Cores semânticas (sucesso, alerta, erro, info) só para estado.
+    -->
+
+    <!-- ===== Cores base (superfícies e texto) ===== -->
+    <Color x:Key="AppBackgroundColor">#F4F5F7</Color>
+    <Color x:Key="SurfaceColor">#FFFFFF</Color>
+    <Color x:Key="SurfaceAltColor">#F0F2F5</Color>
+    <Color x:Key="SurfaceSunkenColor">#E7EAEE</Color>
+    <Color x:Key="BorderColor">#E2E5EA</Color>
+    <Color x:Key="BorderStrongColor">#C9CED6</Color>
+    <Color x:Key="TextPrimaryColor">#111827</Color>
+    <Color x:Key="TextSecondaryColor">#586172</Color>
+    <Color x:Key="TextTertiaryColor">#8A93A1</Color>
+
+    <!-- ===== Acento ===== -->
+    <Color x:Key="AccentColor">#0F766E</Color>
+    <Color x:Key="AccentHoverColor">#0B625B</Color>
+    <Color x:Key="AccentPressedColor">#084E49</Color>
+    <Color x:Key="AccentSoftColor">#E1F2F0</Color>
+    <Color x:Key="AccentSoftHoverColor">#CFE9E6</Color>
+
+    <!-- ===== Barra lateral (grafite) ===== -->
+    <Color x:Key="SidebarColor">#111827</Color>
+    <Color x:Key="SidebarRaisedColor">#1B2436</Color>
+    <Color x:Key="SidebarBorderColor">#263146</Color>
+    <Color x:Key="SidebarTextColor">#A9B3C4</Color>
+    <Color x:Key="SidebarTextStrongColor">#F3F5F8</Color>
+    <Color x:Key="SidebarAccentColor">#2DD4BF</Color>
+
+    <!-- ===== Semânticas ===== -->
+    <Color x:Key="SuccessColor">#15803D</Color>
+    <Color x:Key="SuccessSoftColor">#E4F4EA</Color>
+    <Color x:Key="WarningColor">#B45309</Color>
+    <Color x:Key="WarningSoftColor">#FDF1DF</Color>
+    <Color x:Key="DangerColor">#B91C1C</Color>
+    <Color x:Key="DangerSoftColor">#FCE9E9</Color>
+    <Color x:Key="DangerBorderColor">#F1C3C3</Color>
+    <Color x:Key="InfoColor">#0369A1</Color>
+    <Color x:Key="InfoSoftColor">#E0F0F9</Color>
+
+    <!-- ===== Brushes ===== -->
+    <SolidColorBrush x:Key="AppBackgroundBrush" Color="{StaticResource AppBackgroundColor}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
+    <SolidColorBrush x:Key="SurfaceAltBrush" Color="{StaticResource SurfaceAltColor}" />
+    <SolidColorBrush x:Key="SurfaceSunkenBrush" Color="{StaticResource SurfaceSunkenColor}" />
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="BorderStrongBrush" Color="{StaticResource BorderStrongColor}" />
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
+    <SolidColorBrush x:Key="TextTertiaryBrush" Color="{StaticResource TextTertiaryColor}" />
+
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHoverColor}" />
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="{StaticResource AccentPressedColor}" />
+    <SolidColorBrush x:Key="AccentSoftBrush" Color="{StaticResource AccentSoftColor}" />
+    <SolidColorBrush x:Key="AccentSoftHoverBrush" Color="{StaticResource AccentSoftHoverColor}" />
+
+    <SolidColorBrush x:Key="SidebarBrush" Color="{StaticResource SidebarColor}" />
+    <SolidColorBrush x:Key="SidebarRaisedBrush" Color="{StaticResource SidebarRaisedColor}" />
+    <SolidColorBrush x:Key="SidebarBorderBrush" Color="{StaticResource SidebarBorderColor}" />
+    <SolidColorBrush x:Key="SidebarTextBrush" Color="{StaticResource SidebarTextColor}" />
+    <SolidColorBrush x:Key="SidebarTextStrongBrush" Color="{StaticResource SidebarTextStrongColor}" />
+    <SolidColorBrush x:Key="SidebarAccentBrush" Color="{StaticResource SidebarAccentColor}" />
+
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
+    <SolidColorBrush x:Key="SuccessSoftBrush" Color="{StaticResource SuccessSoftColor}" />
+    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
+    <SolidColorBrush x:Key="WarningSoftBrush" Color="{StaticResource WarningSoftColor}" />
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
+    <SolidColorBrush x:Key="DangerSoftBrush" Color="{StaticResource DangerSoftColor}" />
+    <SolidColorBrush x:Key="DangerBorderBrush" Color="{StaticResource DangerBorderColor}" />
+    <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoColor}" />
+    <SolidColorBrush x:Key="InfoSoftBrush" Color="{StaticResource InfoSoftColor}" />
+
+    <!-- Papel térmico (pré-visualizações) -->
+    <SolidColorBrush x:Key="PaperBrush" Color="#FCFCF9" />
+
+    <!-- ===== Tipografia ===== -->
+    <FontFamily x:Key="UiFont">Segoe UI Variable Text, Segoe UI</FontFamily>
+    <FontFamily x:Key="UiDisplayFont">Segoe UI Variable Text, Segoe UI</FontFamily>
+    <FontFamily x:Key="MonoFont">Cascadia Mono, Consolas</FontFamily>
+    <FontFamily x:Key="IconFont">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+
+    <sys:Double x:Key="FontSizeCaption">11.5</sys:Double>
+    <sys:Double x:Key="FontSizeSmall">12</sys:Double>
+    <sys:Double x:Key="FontSizeBody">13</sys:Double>
+    <sys:Double x:Key="FontSizeBodyLarge">14</sys:Double>
+    <sys:Double x:Key="FontSizeSection">14</sys:Double>
+    <sys:Double x:Key="FontSizeTitle">22</sys:Double>
+
+    <!-- ===== Espaçamento (escala de 4) ===== -->
+    <sys:Double x:Key="Space1">4</sys:Double>
+    <sys:Double x:Key="Space2">8</sys:Double>
+    <sys:Double x:Key="Space3">12</sys:Double>
+    <sys:Double x:Key="Space4">16</sys:Double>
+    <sys:Double x:Key="Space5">20</sys:Double>
+    <sys:Double x:Key="Space6">24</sys:Double>
+    <Thickness x:Key="PagePadding">28,24,28,20</Thickness>
+    <GridLength x:Key="GutterLength">20</GridLength>
+
+    <!-- ===== Raios ===== -->
+    <CornerRadius x:Key="RadiusSmall">5</CornerRadius>
+    <CornerRadius x:Key="RadiusControl">7</CornerRadius>
+    <CornerRadius x:Key="RadiusCard">10</CornerRadius>
+    <CornerRadius x:Key="RadiusPill">999</CornerRadius>
+
+    <!-- ===== Profundidade ===== -->
+    <DropShadowEffect x:Key="ShadowRaised" BlurRadius="12" ShadowDepth="2" Direction="270"
+                      Color="#101828" Opacity="0.08" />
+    <DropShadowEffect x:Key="ShadowPopup" BlurRadius="24" ShadowDepth="6" Direction="270"
+                      Color="#101828" Opacity="0.20" />
+
+    <!-- ===== Ícones (Segoe Fluent Icons / MDL2) =====
+         Uso: <TextBlock Style="{StaticResource Icon}" Text="{StaticResource IconPrint}" /> -->
+    <sys:String x:Key="IconPrint">&#xE749;</sys:String>
+    <sys:String x:Key="IconPrinter">&#xE749;</sys:String>
+    <sys:String x:Key="IconBluetooth">&#xE702;</sys:String>
+    <sys:String x:Key="IconTemplates">&#xE8F1;</sys:String>
+    <sys:String x:Key="IconHistory">&#xE81C;</sys:String>
+    <sys:String x:Key="IconSettings">&#xE713;</sys:String>
+    <sys:String x:Key="IconDiagnostics">&#xE9D9;</sys:String>
+    <sys:String x:Key="IconWarning">&#xE7BA;</sys:String>
+    <sys:String x:Key="IconSearch">&#xE721;</sys:String>
+    <sys:String x:Key="IconChevronDown">&#xE70D;</sys:String>
+    <sys:String x:Key="IconCheck">&#xE73E;</sys:String>
+    <sys:String x:Key="IconInbox">&#xE7C3;</sys:String>
+
+    <!-- ===== Movimento ===== -->
+    <Duration x:Key="DurationFast">0:0:0.12</Duration>
+</ResourceDictionary>

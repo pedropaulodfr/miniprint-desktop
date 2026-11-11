@@ -1,0 +1,30 @@
+<Application x:Class="MiniPrint.Desktop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:MiniPrint.Desktop.Converters"
+             ShutdownMode="OnMainWindowClose">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Tokens.xaml" />
+                <ResourceDictionary Source="Themes/Controls.xaml" />
+                <ResourceDictionary Source="Themes/Components.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+            <conv:InverseBooleanConverter x:Key="InverseBoolean" />
+            <conv:BooleanToVisibilityInverseConverter x:Key="InverseBoolToVisibility" />
+            <conv:NotNullToVisibilityConverter x:Key="NotNullToVisibility" />
+            <conv:NullToVisibilityConverter x:Key="NullToVisibility" />
+            <conv:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibility" />
+            <conv:ZeroToVisibilityConverter x:Key="ZeroToVisibility" />
+            <conv:PointsToDipConverter x:Key="PointsToDip" />
+            <conv:AlignmentConverter x:Key="Alignment" />
+            <conv:Base64ImageConverter x:Key="Base64Image" />
+            <conv:EmptyTextToVisibilityConverter x:Key="EmptyTextToVisibility" />
+            <conv:DoubleToGridLengthConverter x:Key="DoubleToGridLength" />
+            <conv:NonZeroToVisibilityConverter x:Key="NonZeroToVisibility" />
+            <conv:SortModeTextConverter x:Key="SortModeText" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

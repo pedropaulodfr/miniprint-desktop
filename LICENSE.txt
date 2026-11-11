@@ -1,0 +1,51 @@
+MIT License
+
+Copyright (c) 2026 MiniPrint Desktop
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+AVISOS DE TERCEIROS / THIRD-PARTY NOTICES
+
+Este software implementa o protocolo de comunicação da família de impressoras
+conhecida como "CAT Printer" (GB0x, GT01, SC03h, MX0x, YT01, PD01, MXTP).
+
+Os fatos de protocolo (UUIDs GATT, códigos de comando, formato de frame,
+algoritmo de checksum e ordem da sequência de impressão) foram obtidos e
+verificados a partir das seguintes implementações de código aberto:
+
+1. NaitLee/Cat-Printer — https://github.com/NaitLee/Cat-Printer
+   Os módulos printer_lib/commander.py e printer_lib/models.py são publicados
+   sob CC0-1.0 (domínio público). O restante do repositório é GPL-3.0.
+   Nenhum arquivo desse projeto foi copiado para este software.
+
+2. bitbank2/Thermal_Printer — https://github.com/bitbank2/Thermal_Printer
+   Licenciado sob Apache License 2.0. Usado como confirmação independente dos
+   UUIDs, dos frames fixos, do espelhamento de bits e do CRC.
+   Nenhum arquivo desse projeto foi copiado para este software.
+
+A implementação em C# deste projeto é original.
+
+Componentes de plataforma utilizados (não redistribuídos como código-fonte):
+- .NET 8 e Windows Desktop Runtime (MIT, Microsoft)
+- System.Drawing.Common (MIT, .NET Foundation)
+- APIs Windows.Devices.Bluetooth / WinRT (Microsoft)
+
+Ícone e identidade visual: criados para este projeto.

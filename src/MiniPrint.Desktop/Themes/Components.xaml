@@ -1,0 +1,261 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:theme="clr-namespace:MiniPrint.Desktop.Themes">
+
+    <!--
+        DESIGN SYSTEM · Camada 3: componentes compostos.
+        Cartões, painéis, selos de estado, navegação lateral e abas internas.
+    -->
+
+    <!-- ===== Superfícies ===== -->
+    <Style x:Key="Card" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusCard}" />
+        <Setter Property="Padding" Value="20" />
+    </Style>
+
+    <Style x:Key="PanelCard" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusCard}" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="0,0,0,10" />
+    </Style>
+
+    <!-- Painel recuado dentro de um cartão (agrupa controles relacionados) -->
+    <Style x:Key="InsetPanel" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource SurfaceAltBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusCard}" />
+        <Setter Property="Padding" Value="14" />
+    </Style>
+
+    <!-- Área de pré-visualização do papel -->
+    <Style x:Key="PreviewWell" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource SurfaceSunkenBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusCard}" />
+        <Setter Property="Padding" Value="14" />
+    </Style>
+
+    <Style x:Key="Paper" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource PaperBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Effect" Value="{StaticResource ShadowRaised}" />
+    </Style>
+
+    <Style x:Key="Divider" TargetType="Border">
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Background" Value="{StaticResource BorderBrush}" />
+        <Setter Property="Margin" Value="0,16" />
+    </Style>
+
+    <Style x:Key="ActionBar" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="0,1,0,0" />
+        <Setter Property="Padding" Value="0,16,0,0" />
+        <Setter Property="Margin" Value="0,16,0,0" />
+    </Style>
+
+    <Style x:Key="FieldRowBorder" TargetType="Border">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusControl}" />
+        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="Margin" Value="0,0,0,2" />
+    </Style>
+
+    <!-- ===== Selos de estado ===== -->
+    <Style x:Key="Badge" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource SurfaceAltBrush}" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="9,3" />
+        <Setter Property="Margin" Value="0,0,6,6" />
+    </Style>
+    <Style x:Key="BadgeAccent" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{StaticResource AccentSoftBrush}" />
+    </Style>
+    <Style x:Key="BadgeSuccess" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{StaticResource SuccessSoftBrush}" />
+    </Style>
+    <Style x:Key="BadgeWarning" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{StaticResource WarningSoftBrush}" />
+    </Style>
+    <Style x:Key="BadgeDanger" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{StaticResource DangerSoftBrush}" />
+    </Style>
+    <Style x:Key="BadgeInfo" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{StaticResource InfoSoftBrush}" />
+    </Style>
+
+    <Style x:Key="BadgeText" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="11.5" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style x:Key="BadgeTextAccent" TargetType="TextBlock" BasedOn="{StaticResource BadgeText}">
+        <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+    </Style>
+    <Style x:Key="BadgeTextSuccess" TargetType="TextBlock" BasedOn="{StaticResource BadgeText}">
+        <Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+    </Style>
+    <Style x:Key="BadgeTextWarning" TargetType="TextBlock" BasedOn="{StaticResource BadgeText}">
+        <Setter Property="Foreground" Value="{StaticResource WarningBrush}" />
+    </Style>
+    <Style x:Key="BadgeTextDanger" TargetType="TextBlock" BasedOn="{StaticResource BadgeText}">
+        <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+    </Style>
+    <Style x:Key="BadgeTextInfo" TargetType="TextBlock" BasedOn="{StaticResource BadgeText}">
+        <Setter Property="Foreground" Value="{StaticResource InfoBrush}" />
+    </Style>
+
+    <!-- ===== Navegação lateral (grafite) ===== -->
+    <Style x:Key="NavTabControl" TargetType="TabControl">
+        <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border x:Name="Sidebar" Grid.Column="0" Width="248" Background="{StaticResource SidebarBrush}">
+                            <DockPanel>
+                                <ContentPresenter DockPanel.Dock="Top"
+                                                  Content="{Binding Path=(theme:Chrome.SidebarHeader), RelativeSource={RelativeSource TemplatedParent}}" />
+                                <ContentPresenter DockPanel.Dock="Bottom"
+                                                  Content="{Binding Path=(theme:Chrome.SidebarFooter), RelativeSource={RelativeSource TemplatedParent}}" />
+                                <StackPanel IsItemsHost="True" Margin="12,8,12,8"
+                                            KeyboardNavigation.DirectionalNavigation="Cycle" />
+                            </DockPanel>
+                        </Border>
+
+                        <ContentPresenter x:Name="PART_SelectedContentHost"
+                                          Grid.Column="1"
+                                          ContentSource="SelectedContent" />
+                    </Grid>
+                <ControlTemplate.Triggers>
+                        <Trigger Property="theme:Chrome.IsCompact" Value="True">
+                            <Setter TargetName="Sidebar" Property="Width" Value="72" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="NavTabItem" TargetType="TabItem">
+        <Setter Property="ToolTip" Value="{Binding Header, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid Margin="0,2">
+                        <Border x:Name="Root" Background="Transparent"
+                                CornerRadius="{StaticResource RadiusControl}" Padding="14,0" Height="42">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" x:Name="Content">
+                                <TextBlock x:Name="IconGlyph"
+                                           Text="{Binding Path=(theme:Chrome.Icon), RelativeSource={RelativeSource TemplatedParent}}"
+                                           Style="{StaticResource Icon}" FontSize="16" Width="20"
+                                           Foreground="{TemplateBinding Foreground}" />
+                                <TextBlock x:Name="Label" Text="{TemplateBinding Header}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           FontSize="13.5" Margin="12,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="ActiveBar" Width="3" Height="20" CornerRadius="2"
+                                Background="{StaticResource SidebarAccentBrush}"
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Margin="0,0,0,0" Visibility="Collapsed" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Path=(theme:Chrome.IsCompact), RelativeSource={RelativeSource AncestorType=TabControl}}" Value="True">
+                            <Setter TargetName="Label" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Content" Property="HorizontalAlignment" Value="Center" />
+                            <Setter TargetName="Root" Property="Padding" Value="0" />
+                        </DataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource SidebarRaisedBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource SidebarTextStrongBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource SidebarRaisedBrush}" />
+                            <Setter TargetName="IconGlyph" Property="Foreground" Value="{StaticResource SidebarAccentBrush}" />
+                            <Setter TargetName="Label" Property="FontWeight" Value="SemiBold" />
+                            <Setter TargetName="ActiveBar" Property="Visibility" Value="Visible" />
+                            <Setter Property="Foreground" Value="{StaticResource SidebarTextStrongBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Abas internas (controle segmentado) ===== -->
+    <Style x:Key="InnerTabControl" TargetType="TabControl">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Background="{StaticResource SurfaceAltBrush}"
+                                CornerRadius="9" Padding="3" Margin="0,0,0,14"
+                                HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal" IsItemsHost="True" />
+                        </Border>
+                        <ContentPresenter Grid.Row="1" ContentSource="SelectedContent" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="InnerTabItem" TargetType="TabItem">
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border x:Name="Root" Background="Transparent" CornerRadius="7"
+                            Padding="18,6" MinWidth="84">
+                        <TextBlock x:Name="Label" Text="{TemplateBinding Header}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource SurfaceBrush}" />
+                            <Setter TargetName="Root" Property="Effect" Value="{StaticResource ShadowRaised}" />
+                            <Setter TargetName="Label" Property="FontWeight" Value="SemiBold" />
+                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Janelas de diálogo -->
+    <Style TargetType="Window">
+        <Setter Property="FontFamily" Value="{StaticResource UiFont}" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,337 @@
+<UserControl x:Class="MiniPrint.Desktop.Views.PrintView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+
+    <Grid Margin="{StaticResource PagePadding}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.4*" MinWidth="390" />
+            <ColumnDefinition Width="18" />
+            <ColumnDefinition Width="1*" MinWidth="320" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Área de edição -->
+        <Border Grid.Column="0" Style="{StaticResource Card}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Nova impressão" Style="{StaticResource PageTitle}" />
+                    <TextBlock Style="{StaticResource PageSubtitle}"
+                               Text="Escreva um texto ou importe uma imagem. A pré-visualização mostra o resultado exato em 384 pontos." />
+                </StackPanel>
+
+                <TabControl Grid.Row="1"
+                            Style="{StaticResource InnerTabControl}"
+                            SelectedIndex="{Binding ContentTab}">
+
+                    <!-- TEXTO -->
+                    <TabItem Header="Texto" Style="{StaticResource InnerTabItem}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBox Grid.Row="0"
+                                     Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
+                                     AcceptsReturn="True"
+                                     TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto"
+                                     FontFamily="{StaticResource MonoFont}"
+                                     FontSize="13.5"
+                                     MinHeight="110"
+                                     Margin="0,0,0,12" />
+
+                            <Border Grid.Row="1" Style="{StaticResource InsetPanel}">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" MinWidth="110" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="72" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="116" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="80" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Fonte" Style="{StaticResource Label}" />
+                                            <ComboBox ItemsSource="{Binding FontFamilies}"
+                                                      SelectedItem="{Binding FontFamilyName}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="Tamanho" Style="{StaticResource Label}" />
+                                            <TextBox Text="{Binding FontSize, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="4">
+                                            <TextBlock Text="Alinhamento" Style="{StaticResource Label}" />
+                                            <ComboBox ItemsSource="{Binding Alignments}"
+                                                      SelectedItem="{Binding Alignment}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="6">
+                                            <TextBlock Text="Entrelinhas" Style="{StaticResource Label}" />
+                                            <TextBox Text="{Binding LineSpacing, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Grid Margin="0,10,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Margem esq." Style="{StaticResource Label}" />
+                                            <TextBox Text="{Binding MarginLeft, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="Margem dir." Style="{StaticResource Label}" />
+                                            <TextBox Text="{Binding MarginRight, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="4">
+                                            <TextBlock Text="Margem sup." Style="{StaticResource Label}" />
+                                            <TextBox Text="{Binding MarginTop, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="6">
+                                            <TextBlock Text="Margem inf." Style="{StaticResource Label}" />
+                                            <TextBox Text="{Binding MarginBottom, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <WrapPanel Margin="0,8,0,0">
+                                        <CheckBox Content="Negrito" IsChecked="{Binding Bold}" Margin="0,0,18,0" />
+                                        <CheckBox Content="Itálico" IsChecked="{Binding Italic}" Margin="0,0,18,0" />
+                                        <CheckBox Content="Quebrar linhas" IsChecked="{Binding WordWrap}" />
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- IMAGEM -->
+                    <TabItem Header="Imagem" Style="{StaticResource InnerTabItem}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                                <Button Content="Escolher imagem..."
+                                        Style="{StaticResource SecondaryButton}"
+                                        Command="{Binding ChooseImageCommand}" />
+                                <Button Content="Remover"
+                                        Style="{StaticResource GhostButton}"
+                                        Command="{Binding ClearImageCommand}"
+                                        Margin="8,0,0,0" />
+                                <TextBlock Text="{Binding ImageFileName}"
+                                           VerticalAlignment="Center"
+                                           Margin="12,0,0,0"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           TextTrimming="CharacterEllipsis"
+                                           MaxWidth="260" />
+                            </StackPanel>
+
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource Muted}"
+                                               Margin="0,0,0,10"
+                                               Text="Formatos aceitos: PNG, JPG/JPEG e BMP. A imagem é reduzida para 384 pontos de largura preservando a proporção." />
+
+                                    <Grid Margin="0,0,0,4">
+                                        <TextBlock Text="Brilho" Style="{StaticResource Label}" />
+                                        <TextBlock Text="{Binding Brightness, StringFormat={}{0:0.00}}"
+                                                   HorizontalAlignment="Right" Style="{StaticResource Mono}" />
+                                    </Grid>
+                                    <Slider Minimum="0.4" Maximum="1.6" Value="{Binding Brightness}" />
+
+                                    <Grid Margin="0,0,0,4">
+                                        <TextBlock Text="Contraste" Style="{StaticResource Label}" />
+                                        <TextBlock Text="{Binding Contrast, StringFormat={}{0:0.00}}"
+                                                   HorizontalAlignment="Right" Style="{StaticResource Mono}" />
+                                    </Grid>
+                                    <Slider Minimum="0.4" Maximum="2.0" Value="{Binding Contrast}" />
+
+                                    <Grid Margin="0,0,0,4">
+                                        <TextBlock Text="Limiar (preto/branco)" Style="{StaticResource Label}" />
+                                        <TextBlock Text="{Binding Threshold}"
+                                                   HorizontalAlignment="Right" Style="{StaticResource Mono}" />
+                                    </Grid>
+                                    <Slider Minimum="1" Maximum="254" Value="{Binding Threshold}" />
+
+                                    <TextBlock Text="Recorte" Style="{StaticResource SectionHeader}" Margin="0,12,0,4" />
+                                    <Grid Margin="0,0,0,2">
+                                        <TextBlock Text="Esquerda" Style="{StaticResource Label}" />
+                                        <TextBlock Text="{Binding CropLeft, StringFormat={}{0:P0}}"
+                                                   HorizontalAlignment="Right" Style="{StaticResource Mono}" />
+                                    </Grid>
+                                    <Slider Minimum="0" Maximum="0.45" Value="{Binding CropLeft}" />
+                                    <Grid Margin="0,0,0,2">
+                                        <TextBlock Text="Direita" Style="{StaticResource Label}" />
+                                        <TextBlock Text="{Binding CropRight, StringFormat={}{0:P0}}"
+                                                   HorizontalAlignment="Right" Style="{StaticResource Mono}" />
+                                    </Grid>
+                                    <Slider Minimum="0" Maximum="0.45" Value="{Binding CropRight}" />
+                                    <Grid Margin="0,0,0,2">
+                                        <TextBlock Text="Topo" Style="{StaticResource Label}" />
+                                        <TextBlock Text="{Binding CropTop, StringFormat={}{0:P0}}"
+                                                   HorizontalAlignment="Right" Style="{StaticResource Mono}" />
+                                    </Grid>
+                                    <Slider Minimum="0" Maximum="0.45" Value="{Binding CropTop}" />
+                                    <Grid Margin="0,0,0,2">
+                                        <TextBlock Text="Base" Style="{StaticResource Label}" />
+                                        <TextBlock Text="{Binding CropBottom, StringFormat={}{0:P0}}"
+                                                   HorizontalAlignment="Right" Style="{StaticResource Mono}" />
+                                    </Grid>
+                                    <Slider Minimum="0" Maximum="0.45" Value="{Binding CropBottom}" />
+
+                                    <Grid Margin="0,12,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Meio-tom" Style="{StaticResource Label}" />
+                                            <ComboBox ItemsSource="{Binding DitheringModes}"
+                                                      SelectedItem="{Binding Dithering}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="Rotação" Style="{StaticResource Label}" />
+                                            <ComboBox ItemsSource="{Binding Rotations}"
+                                                      SelectedItem="{Binding Rotation}" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <StackPanel Margin="0,10,0,0">
+                                        <TextBlock Text="Ajuste à largura" Style="{StaticResource Label}" />
+                                        <ComboBox ItemsSource="{Binding FitModes}" SelectedItem="{Binding Fit}" />
+                                    </StackPanel>
+
+                                    <CheckBox Content="Inverter cores (negativo)" IsChecked="{Binding Invert}"
+                                              Margin="0,10,0,0" />
+
+                                    <CheckBox Content="Ajustar intensidade desta impressão"
+                                              IsChecked="{Binding UseCustomEnergy}"
+                                              Margin="0,12,0,0" />
+                                    <Grid Margin="0,0,0,4"
+                                          IsEnabled="{Binding UseCustomEnergy}">
+                                        <TextBlock Text="Intensidade (energia térmica)" Style="{StaticResource Label}" />
+                                        <TextBlock Text="{Binding EnergyValue}"
+                                                   HorizontalAlignment="Right" Style="{StaticResource Mono}" />
+                                    </Grid>
+                                    <Slider Minimum="0" Maximum="65535"
+                                            Value="{Binding EnergyValue}"
+                                            IsEnabled="{Binding UseCustomEnergy}" />
+                                    <TextBlock Style="{StaticResource Muted}"
+                                               Text="Mais energia deixa a impressão mais escura; menos energia deixa mais clara e preserva detalhes." />
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+
+                <!-- Ações -->
+                <Border Grid.Row="2" BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,1,0,0" Padding="0,14,0,0" Margin="0,14,0,0">
+                    <StackPanel>
+                        <TextBlock Text="{Binding StatusMessage}"
+                                   Style="{StaticResource Muted}"
+                                   Margin="0,0,0,10" />
+
+                        <Grid Visibility="{Binding IsPrinting, Converter={StaticResource BoolToVisibility}}"
+                              Margin="0,0,0,10">
+                            <StackPanel>
+                                <ProgressBar Maximum="1" Value="{Binding Progress, Mode=OneWay}" />
+                                <TextBlock Text="{Binding ProgressMessage}"
+                                           Style="{StaticResource Muted}"
+                                           Margin="0,6,0,0" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                    Content="Imprimir página de teste"
+                                    Style="{StaticResource GhostButton}"
+                                    Command="{Binding PrintTestCommand}" />
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <Button Content="Cancelar"
+                                        Style="{StaticResource DangerButton}"
+                                        Command="{Binding CancelCommand}"
+                                        Margin="0,0,8,0"
+                                        Visibility="{Binding IsPrinting, Converter={StaticResource BoolToVisibility}}" />
+                                <Button Content="{Binding PrintButtonText}"
+                                        Style="{StaticResource PrimaryButton}"
+                                        Command="{Binding PrintCommand}"
+                                        MinWidth="150" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Pré-visualização -->
+        <Border Grid.Column="2" Style="{StaticResource Card}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                    <TextBlock Text="Pré-visualização" Style="{StaticResource SectionHeader}" Margin="0" />
+                    <TextBlock Text="{Binding PreviewInfo}" Style="{StaticResource Muted}" Margin="0,2,0,0" />
+                </StackPanel>
+
+                <Border Grid.Row="1" Style="{StaticResource PreviewWell}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Auto">
+                        <Border Style="{StaticResource Paper}">
+                            <Image Source="{Binding PreviewImage}"
+                                   Stretch="None"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True">
+                                <Image.LayoutTransform>
+                                    <ScaleTransform ScaleX="{Binding PreviewScale}"
+                                                    ScaleY="{Binding PreviewScale}" />
+                                </Image.LayoutTransform>
+                            </Image>
+                        </Border>
+                    </ScrollViewer>
+                </Border>
+
+                <StackPanel Grid.Row="2" Margin="0,12,0,0">
+                    <TextBlock Text="Zoom" Style="{StaticResource Label}" />
+                    <Slider Minimum="0.5" Maximum="3" Value="{Binding PreviewScale}" />
+                    <Button Content="Salvar pré-visualização em PNG"
+                            Style="{StaticResource GhostButton}"
+                            Command="{Binding SavePreviewCommand}"
+                            HorizontalAlignment="Left" />
+                    <Button Content="Salvar pacotes preparados (.bin)"
+                            Style="{StaticResource GhostButton}"
+                            Command="{Binding SaveJobBytesCommand}"
+                            HorizontalAlignment="Left"
+                            Margin="0,4,0,0" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
